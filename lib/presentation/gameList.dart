@@ -53,22 +53,39 @@ class _GameListState extends State<GameList> {
                         child: Row(
                           children: [
                             SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: Image.network(
-                                  state.gameList[index].thumbnail
-                                      .toString(), // Replace this URL with your image URL
-                                  loadingBuilder: (context, child, progress) {
-                                    if (progress == null) return child;
-                                    return CircularProgressIndicator(
-                                      value: progress.expectedTotalBytes != null
-                                          ? progress.cumulativeBytesLoaded /
-                                              progress.expectedTotalBytes!
-                                          : null,
-                                    );
-                                  },
-                                  fit: BoxFit.cover,
-                                )),
+                              height: 100,
+                              width: 100,
+                              child: Image.network(
+                                state.gameList[index].thumbnail
+                                    .toString(), // Your image URL
+                                loadingBuilder: (context, child, progress) {
+                                  if (progress == null)
+                                    return child; // If the image has loaded, display it
+
+                                  // Show CircularProgressIndicator while the image is loading
+                                  return Center(
+                                    // Ensure the progress indicator is centered
+                                    child: SizedBox(
+                                      width:
+                                          50.0, // Set the desired width for the progress indicator
+                                      height:
+                                          50.0, // Set the desired height for the progress indicator
+                                      child: CircularProgressIndicator(
+                                        value: progress.expectedTotalBytes !=
+                                                null
+                                            ? progress.cumulativeBytesLoaded /
+                                                progress.expectedTotalBytes!
+                                            : null,
+                                        strokeWidth:
+                                            5.0, // Set the thickness of the progress indicator
+                                      ),
+                                    ),
+                                  );
+                                },
+                                fit: BoxFit
+                                    .cover, // This ensures the image fits within the SizedBox dimensions
+                              ),
+                            ),
                             const SizedBox(
                               width: 10,
                             ),
